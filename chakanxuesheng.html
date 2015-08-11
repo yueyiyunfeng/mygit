@@ -1,0 +1,106 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>查看学生</title>
+<link rel="stylesheet" type="text/css" href="/static/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/common.css"/>
+<style>
+ div.ckxs div.main{ padding:0px 5% 80px 5%; min-width:460px;}
+ div.ckxs div.main p.biao{ margin-top:30px; text-align:center; color:#4a4a4a; font-size:45px; height:120px; line-height:120px;}
+ div.ckxs div.main p.biao span{ color:#4fc4c1;}
+ div.ckxs div.main form input{}
+ div.ckxs div.main ul.grade{position:relative; margin-top:40px;}
+ div.ckxs div.main div.in{ height:70px; position:absolute; left:700px; top:314px; width:370px; padding-left:100px; float:left; border-bottom:#6e6e6e solid 20px;}
+ div.ckxs div.main ul.grade li{ cursor:pointer;color:#4a4a4a; float:left; font-size:23px; width:220px; text-align:center; height:80px; line-height:80px; border-bottom:#6e6e6e solid 20px;}
+ 
+ div.ckxs div.main input.keyWord{position:relative; width:100%; height:47px;line-height:47px; font-size:20px;border:none;border-bottom:#bebebe solid 1px;}
+ div.ckxs div.main input.image{ position:absolute; right:0px; top:10px;}
+ div.ckxs div.main div.tab{ padding-top:16px; margin-top:70px; min-width:808px;}
+ div.ckxs div.main div.tab td{ height:60px; line-height:60px;}
+ /*div.ckxs div.main div.tab tr{ display:none;}*/
+ div.ckxs div.main div.tab tr:nth-child(1){ font-weight:bolder;}
+ div.ckxs div.main div.tab td:nth-child(1){ width:25%; text-align:center; }
+ div.ckxs div.main div.tab td:nth-child(2){ width:25%; text-align:center;  }
+ div.ckxs div.main div.tab td:nth-child(3){ width:20%; text-align:center;  }
+ div.ckxs div.main div.tab td:nth-child(4){ width:330px; text-align:center;  }
+ div.ckxs div.main div.bot input{ border:0px; text-align:center; margin-left:40%; width:160px; height:50px; line-height:50px; background:#23b5b2; border-radius:8px; color:#FFF; font-size:20px; cursor:pointer; margin-top:60px;}
+
+ div.ckxs div.main div.bot div.pre_next{ width:100%; height:30px;margin-top:40px; margin-left:35%;}
+ div.ckxs div.main div.bot div.pre_next a{ color:#4a4a4a;}
+ div.ckxs div.main div.bot div.pre_next ul li{ float:left; width:30px; height:30px; text-align:center; line-height:30px; cursor:pointer;}
+ div.ckxs div.main div.bot div.pre_next p{ height:30px; line-height:30px; cursor:pointer;}
+ div.ckxs div.main div.bot div.pre_next ul.page li.hover{ color:#23b5b2;}
+</style>
+</head>
+
+<body>
+ <div class="ckxs">
+
+   {% include "top.html" %}
+  <div class="main">
+      <p class="biao">查看学生列表<span>__</span></p>
+      <form name="myform" method="GET" class="form">
+       <br />{% csrf_token %}<br />
+      <ul class="grade fl">
+       <li>2013级</li>
+       <li>2014级</li>
+       <li>2015级</li>
+       
+      </ul>
+      <div class="clear"></div>
+      <input type="text" name="grade" value="">
+    
+      </form>
+      <div class="in">
+      <input class="keyWord fl" type="search"  placeholder="关键词">
+      <input type="image" class="image" src="image/ser_03.png">
+      </div>
+     <div class="tab">
+        <form>
+        <br />{% csrf_token %}<br />
+          <table>
+            <tr class='title'>
+              <td>学号</td>
+              <td>姓名</td>
+              <td>学院</td>
+              <td>{{ form_grade }}</td>
+            </tr>
+            
+           {% if stulist %}
+           
+                        {% for c in stulist %}
+                        <tr>
+			                <td>{{ c.user.username }}</td>
+                            <td>{{c.name}}</td>
+                            <td>{{c.major}}</td>
+                            <td>{{c.institute}}</td>
+                            <td><a href="/edituser?id={{c.user.username}}&status=stu">修改</a></td>
+                        </tr>
+                        {% endfor %} 
+                    {% else %}
+                        <h5>暂无数据</h5>
+                    {% endif %}
+          </table>
+        </form>
+      </div>
+      <div class="clear"></div>
+      <div class="bot">
+         <input type="button" value="添加学生">
+         <div class="pre_next">
+           <p class=" pre fl">previous</p>
+           <ul class="page fl">
+               
+           </ul>
+           <p class="ne fl">next</p>
+         </div>
+         <div class="clear"></div>
+      </div>
+      
+  </div>
+ </div>
+</body>
+</html>
+<script type="text/javascript" src="/static/js/js_lower/j.js"></script>
+<script type="text/javascript" src="/static/js/js_lower/chakanxuesheng.js"></script>
+
